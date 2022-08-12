@@ -1,0 +1,73 @@
+﻿@model AskMe.Models.Question
+
+@{
+	ViewBag.Title = "ShowQuestion";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:15px">
+	<div class="col-md-10">
+		<p style="font-size:30px">
+			@ViewBag.qs.Title
+		</p>
+	</div>
+</div>
+<div class="row" style="margin-top:0px">
+	<div class="col-md-3">
+		asked: @ViewBag.qs.CreationDate
+	</div>
+	<div class="col-md-2">
+		@ViewBag.ans.Count answers
+	</div>
+	<div class="col-md-3">
+		@ViewBag.qUser.UserName
+	</div>
+</div>
+<hr />
+<div class="row">
+	<div class="col-md-1">
+		<p style="font-size:25px; text-align:center">
+			<span class="glyphicon glyphicon-triangle-top"></span> <br />
+			<span style="padding-left:2px">@ViewBag.qs.VoteCount</span> <br />
+			<span class="glyphicon glyphicon-triangle-bottom"></span> <br />
+			@if(ViewBag.qs.Solved == 1)
+			{
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+			}
+		</p>
+	</div>
+	<div class="col-md-11">
+		<p style="font-size:18px">
+			@ViewBag.qs.Content
+		</p>
+	</div>
+</div>
+
+<hr />
+
+<p style="color:green; font-size:25px">
+	Answers:
+</p>
+
+@foreach(var a in ViewBag.ans)
+{
+	<div style="margin-left:30px">
+		<div class="row">
+			<div class="col-mod-1">
+				<p style="font-size:25px; text-align:center">
+					<span class="glyphicon glyphicon-triangle-top"></span> <br />
+					<span style="padding-left:2px">@a.voteCount</span> <br />
+					<span class="glyphicon glyphicon-triangle-bottom"></span> <br />
+				</p>
+			</div>
+			<div class="col-md-8">
+				<p style="font-size:18px">
+					@a.Content
+					asfdasfsdafdsafsdafdsafa
+				</p>
+			</div>
+		</div>
+	</div>
+}
+
+@*<h3>@ViewBag.ans[0].User.UserName</h3>*@

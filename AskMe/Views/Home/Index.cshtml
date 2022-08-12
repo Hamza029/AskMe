@@ -1,0 +1,96 @@
+﻿@{
+	ViewBag.Title = "Home Page";
+}
+
+@if (Session["successfulLogIn"] != null)
+{
+	<div class="alert alert-info alert-dismissable" role="alert">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		successfully logged in as <b>@Session["username"]</b>
+	</div>
+	Session.Remove("successfulLogIn");
+}
+
+@foreach (var qs in ViewBag.qList)
+{
+	<hr />
+	<div class="row">
+		<div class="col-md-3">
+			<p style="text-align:right">
+				@qs.VoteCount votes <br />
+				@qs.Answers.Count answers <br />
+				asked: @qs.CreationDate <br />
+				user: @qs.User.UserName <br />
+				solved:
+				@{
+					if (qs.Solved == 1)
+					{
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					}
+					else
+					{
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					}
+				}
+			</p>
+		</div>
+		<div class="col-md-7">
+			<a href="@Url.Action("ShowQuestion", qs)">
+				<p style="font-size:22px">@qs.Title</p>
+			</a>
+			<p>
+				@qs.Content
+			</p>
+		</div>
+		<div class="col-md-2">
+			<p>
+				Category:<br />
+				<span style="color:green">@qs.Category.CategoryName</span>
+			</p>
+		</div>
+	</div>
+}
+<hr />
+
+<div style="text-align:center">
+	<ul class="pagination">
+		@{
+			int totalPages = ViewBag.totalPages;
+			int currentPage = ViewBag.currentPage;
+
+			if (currentPage > 1)
+			{
+				int prev = currentPage - 1;
+				<li>
+					<a href="?page=@prev">Previous</a>
+				</li>
+			}
+
+			int i = 1;
+
+			for (; i <= totalPages; i++)
+			{
+				if (i == currentPage)
+				{
+					<li class="active">
+						<a href="?page=@i">@i</a>
+					</li>
+				}
+				else
+				{
+					<li>
+						<a href="?page=@i">@i</a>
+					</li>
+				}
+			}
+
+			if (currentPage < totalPages)
+			{
+				int next = currentPage + 1;
+				<li>
+					<a href="?page=@next">Next</a>
+				</li>
+			}
+		}
+	</ul>
+</div>

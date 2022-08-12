@@ -1,0 +1,47 @@
+﻿@model AskMe.Models.Admin
+
+@{
+	ViewBag.Title = "AddAdmin";
+	Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>AddAdmin</h2>
+
+@using (Html.BeginForm("AddAdminPost", "Admin", FormMethod.Post))
+{
+	<div class="container">
+
+		<div class="form-group">
+			@Html.HiddenFor(x => x.AdminId)
+			<label>Name</label>
+			@Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+			@Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			<label>Username</label>
+			@Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+			@Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			<label>Password</label>
+			@Html.PasswordFor(x => x.AdminPassword, new { @class = "form-control" })
+			@Html.ValidationMessageFor(x => x.AdminPassword, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+
+		<div class="form-group">
+			<label class="label-danger">@ViewBag.DuplicateMessage</label>
+		</div>
+
+	</div>
+}
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}
+

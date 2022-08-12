@@ -1,0 +1,34 @@
+﻿@model List<AskMe.Models.Admin>
+
+@{
+	ViewBag.Title = "ShowAdmins";
+	Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>List of Admins</h2>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Username</th>
+			<th scope="col">Name</th>
+			<th scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var admin in Model)
+		{
+			<tr class="table-info">
+				<td>@admin.AdminId</td>
+				<td>@admin.UserName</td>
+				<td>@admin.Name</td>
+				<td>
+					<a href="@Url.Action("AddAdmin", new {admin.AdminId, admin.Name, admin.UserName, admin.AdminPassword})"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a href="@Url.Action("DeleteAdmin", new {admin.AdminId})"><i class="glyphicon glyphicon-trash"></i></a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+

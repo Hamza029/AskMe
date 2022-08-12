@@ -1,0 +1,19 @@
+﻿
+@{
+	ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+<h3>Welcome</h3>
+
+@if (Session["username"] == null)
+{
+	<p>empty</p>
+}
+else
+{
+	<p>Welcome @Session["username"]!</p>
+	@*Session.Remove("username");*@
+}
+
