@@ -1,0 +1,72 @@
+create table Users (
+	UserId int primary key identity(1,1),
+	Name varchar(200),
+	UserName varchar(200),
+	Email varchar(200),
+	UserPassword varchar(200),
+	Intro text
+);
+
+ALTER TABLE Users
+ADD CONSTRAINT Unique_UserName_Email Unique (UserName,Email);
+
+create table Admin (
+	AdminId int primary key identity(1,1),
+	Name varchar(200),
+	UserName varchar(200),
+	AdminPassword varchar(200)
+);
+
+ALTER TABLE Admin
+ADD CONSTRAINT Unique_UserName_Admin Unique (UserName);
+
+create table Category (
+	CategoryId int primary key identity(1,1),
+	CategoryName varchar(200),
+);
+
+create table Question (
+	QuestionId int primary key identity(1,1),
+	UserId int,
+	Title text,
+	Content text,
+	CreationDate varchar(250),
+	QStatus int,
+	Solved int,
+	VoteCount int,
+	CategoryId int,
+
+	CONSTRAINT FK_Question_User FOREIGN KEY (UserId)
+    REFERENCES Users(UserId),
+
+	CONSTRAINT FK_Question_Category FOREIGN KEY (CategoryId)
+    REFERENCES Category(CategoryId)
+);
+
+create table QuestionCategory (
+	QuestionCategoryId int primary key identity(1,1),
+	QuestionId int,
+	CategoryId int,
+
+	CONSTRAINT FK_QCategory_Question FOREIGN KEY (QuestionId)
+    REFERENCES Question(QuestionId),
+
+	CONSTRAINT FK_QCategory_Category FOREIGN KEY (CategoryId)
+    REFERENCES Category(CategoryId)
+);
+
+create table Answer (
+	AnswerId int primary key identity(1,1),
+	QuestionId int,
+	voteCount int,
+	UserId int,
+	CreationDate varchar(250),
+	Content text,
+	AStatus int,
+
+	CONSTRAINT FK_Answer_User FOREIGN KEY (UserId)
+    REFERENCES Users(UserId),
+
+	CONSTRAINT FK_Answer_Question FOREIGN KEY (QuestionId)
+    REFERENCES Question(QuestionId)
+)
