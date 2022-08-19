@@ -237,6 +237,8 @@
     <Content Include="Views\Admin\ShowAdmins.cshtml" />
     <Content Include="Views\Home\MyQuestions.cshtml" />
     <Content Include="Views\Home\ShowQuestion.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Home\EditQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

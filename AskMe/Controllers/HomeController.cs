@@ -109,7 +109,49 @@ namespace AskMe.Controllers
             List<Question> myQList = db.Questions.Where(x => x.UserId == userId ).ToList();
             ViewBag.myQList = myQList;
 
-            return View();
+            return View(myQList);
+        }
+        [HttpGet]
+        public ActionResult EditQuestion(Question obj)
+        {
+
+            List<Category> categoryList = db.Categories.ToList();
+            ViewBag.categoryList = categoryList;
+         
+
+            return View(obj);
+        }
+        [HttpPost]
+        public ActionResult EditQuestionPost(Question obj)
+        {
+
+            if (obj.QStatus == null) obj.QStatus = 0;
+            else obj.QStatus = 1;
+            if (obj.Solved == null) obj.Solved = 0;
+            else obj.Solved = 1;
+            db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+
+
+
+            return RedirectToAction("MyQuestions");
+        }
+
+        public ActionResult Delete(int QuestionId)
+        {
+            if (false)
+            {
+                var answertodlt = db.Answers.Where(x => x.QuestionId == QuestionId).First();
+                db.Answers.Remove(answertodlt);
+                db.SaveChanges();
+            }
+
+            var res = db.Questions. Where(x => x.QuestionId == QuestionId).First();
+            db.Questions.Remove(res);
+            db.SaveChanges();
+            var list = db.Categories.ToList();
+            return RedirectToAction("Index");
         }
     }
 }
