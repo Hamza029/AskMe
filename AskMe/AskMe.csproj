@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,6 +239,8 @@
     <Content Include="Views\Home\MyQuestions.cshtml" />
     <Content Include="Views\Home\ShowQuestion.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Category\CategoryList.cshtml" />
+    <Content Include="Views\Category\AddCategory.cshtml" />
     <Content Include="Views\Home\EditQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>

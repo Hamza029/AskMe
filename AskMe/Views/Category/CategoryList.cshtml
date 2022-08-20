@@ -1,0 +1,29 @@
+﻿@model List<AskMe.Models.Category>
+@{
+    ViewBag.Title = "CategoryList";
+}
+
+<h2>CategoryList</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CategoryId</td>
+            <td>@item.CategoryName</td>
+            <td>
+                <a href="@Url.Action("AddCategory",new {item.CategoryId,item.CategoryName})"><i class="btn btn-success">Edit</i></a>
+                <a href="@Url.Action("Delete", new {item.CategoryId})"><i class="btn btn-default">Delete</i></a>
+            </td>
+        </tr>
+    }
+</table>
+<div class="col-md-offset-2 col-md-10">
+    <label>@ViewBag.notification</label>
+</div>
+
+

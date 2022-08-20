@@ -1,0 +1,28 @@
+﻿@model AskMe.Models.Category
+@{
+    ViewBag.Title = "Category";
+}
+
+<h2>Category</h2>
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.CategoryId)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label>Category Name</label>
+        @Html.ValidationMessageFor(x => x.CategoryName, "", new { @class = "error" })
+        @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+    </div>
+
+    <button type="Submit">Add</button>
+    <div class="col-md-offset-2 col-md-10">
+        <label>@ViewBag.notification</label>
+    </div>
+}
