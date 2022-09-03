@@ -60,7 +60,7 @@
 			@*<span class="glyphicon glyphicon-triangle-top"></span> <br />*@
 			<a href="@Url.Action("GenerateVote", new { qid = qq.QuestionId, val = 1})">
 				@{
-					if (db.Votes.Any(x => x.U_Id == uid && x.Q_Id == qq.QuestionId))
+					if (db.Votes.Any(x => x.U_Id == uid && x.Q_Id == qq.QuestionId && x.Upvote == 1))
 					{
 						<span style="color:green;" class="glyphicon glyphicon-triangle-top"></span> <br />
 					}
@@ -71,8 +71,27 @@
 				}
 				@*<span class="glyphicon glyphicon-triangle-top"></span> <br />*@
 			</a>
-			<span style="padding-left:2px">@qq.VoteCount</span> <br />
-			<span class="glyphicon glyphicon-triangle-bottom"></span> <br />
+			<span style="padding-left:2px">
+				@{ 
+					int up = db.Votes.Where(x => x.Q_Id == qq.QuestionId && x.Upvote == 1).Count();
+					int down = db.Votes.Where(x => x.Q_Id == qq.QuestionId && x.Upvote == -1).Count();
+					int tot = up - down;
+					<span>@tot</span>
+				}	
+			</span> <br />
+			<a href="@Url.Action("GenerateVote", new { qid = qq.QuestionId, val = -1})">
+				@{
+					if (db.Votes.Any(x => x.U_Id == uid && x.Q_Id == qq.QuestionId && x.Upvote == -1))
+					{
+						<span style="color:red;" class="glyphicon glyphicon-triangle-bottom"></span> <br />
+					}
+					else
+					{
+						<span style="color:gray;" class="glyphicon glyphicon-triangle-bottom"></span> <br />
+					}
+				}
+			</a>
+			@*<span class="glyphicon glyphicon-triangle-bottom"></span> <br />*@
 			@if (qq.Solved == 1)
 			{
 				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>

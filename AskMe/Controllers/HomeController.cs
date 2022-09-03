@@ -69,11 +69,44 @@ namespace AskMe.Controllers
 
                 if (count > 0)
                 {
-                    Session["voteTwice"] = 1;
+                    //Session["voteTwice"] = 1;
+                    //return RedirectToAction("ShowQuestion", qs);
+
+                    Vote vote = db.Votes.Where(x => x.U_Id == uid && x.A_Id == aid).ToList().First();
+
+                    if (vote.Upvote == 1)
+                    {
+                        if (val == 1)
+                        {
+                            db.Votes.Remove(vote);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            vote.Upvote = -1;
+                            db.Entry(vote).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        if (val == -1)
+                        {
+                            db.Votes.Remove(vote);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            vote.Upvote = 1;
+                            db.Entry(vote).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+
                     return RedirectToAction("ShowQuestion", qs);
                 }
 
-                if(val == 1)
+                if(val != 0)
                 {
                     Vote vote = new Vote();
                     vote.Upvote = vote.Downvote = val;
@@ -93,11 +126,44 @@ namespace AskMe.Controllers
 
                 if (count > 0)
                 {
-                    Session["voteTwice"] = 1;
+                    //Session["voteTwice"] = 1;
+                    //return RedirectToAction("ShowQuestion", qs);
+
+                    Vote vote = db.Votes.Where(x => x.U_Id == uid && x.A_Id == aid).ToList().First();
+
+                    if(vote.Upvote == 1)
+                    {
+                        if(val == 1)
+                        {
+                            db.Votes.Remove(vote);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            vote.Upvote = -1;
+                            db.Entry(vote).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        if (val == -1)
+                        {
+                            db.Votes.Remove(vote);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            vote.Upvote = 1;
+                            db.Entry(vote).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+
                     return RedirectToAction("ShowQuestion", qs);
                 }
 
-                if (val == 1)
+                if (val != 0)
                 {
                     Vote vote = new Vote();
                     vote.Upvote = vote.Downvote = val;
