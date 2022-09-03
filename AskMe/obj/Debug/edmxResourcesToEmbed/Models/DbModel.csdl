@@ -130,6 +130,7 @@
       <End Role="Category" EntitySet="Categories" />
       <End Role="Question" EntitySet="Questions" />
     </AssociationSet>
+    <EntitySet Name="Votes" EntityType="AskMeModel.Vote" />
   </EntityContainer>
   <EntityType Name="QuestionCategory">
     <Key>
@@ -177,4 +178,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Vote">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="U_Id" Type="Int32" />
+    <Property Name="Upvote" Type="Int32" />
+    <Property Name="Downvote" Type="Int32" />
+    <Property Name="VoteStatus" Type="Int32" />
+    <Property Name="Q_Id" Type="Int32" />
+    <Property Name="A_Id" Type="Int32" />
+  </EntityType>
 </Schema>

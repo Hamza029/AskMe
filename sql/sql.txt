@@ -70,3 +70,13 @@ create table Answer (
 	CONSTRAINT FK_Answer_Question FOREIGN KEY (QuestionId)
     REFERENCES Question(QuestionId)
 )
+
+create table Votes (
+	VoteId int primary key identity(1,1),
+	U_Id int,
+	Upvote int,
+	Downvote int,
+	VoteStatus int,
+	Q_Id int,
+	A_Id int,
+)

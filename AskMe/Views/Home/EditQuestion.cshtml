@@ -1,0 +1,80 @@
+﻿@model AskMe.Models.Question
+
+@{
+    ViewBag.Title = "EditQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditQuestion</h2>
+
+@using (Html.BeginForm("EditQuestionPost", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Question</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(x => x.QuestionId)
+    @Html.HiddenFor(x => x.CreationDate)
+    @Html.HiddenFor(x => x.UserId)
+
+    @Html.HiddenFor(x => x.VoteCount)
+
+    <div class="form-group">
+        <label for="Category">Category</label>
+        <select name="CategoryId" class="form-control" id="">
+            @if (ViewBag.categoryList != null)
+            {
+                foreach (var category in ViewBag.categoryList)
+                {
+                    <option value="@category.CategoryId">@category.CategoryName</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @rows = "5" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", @rows = "105" } })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-check">
+        <input name="Solved" class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
+        <label class="form-check-label" for="Solved">
+            Solved
+        </label>
+    </div>
+    <div class="form-check">
+        <input name="QStatus" class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
+        <label class="form-check-label" for="QStatus">
+            Make it public
+        </label>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

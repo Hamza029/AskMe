@@ -74,5 +74,31 @@ namespace AskMe.Controllers
 
             return View("ShowAdmins", list);
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Admin model)
+        {
+            var checklogin = db.Admins.Where(x => x.UserName.Equals(model.UserName) && x.AdminPassword.Equals(model.AdminPassword)).FirstOrDefault();
+            if (checklogin != null)
+            {
+                Session["IDss"] = model.AdminId.ToString();
+                Session["Usernamess"] = model.UserName.ToString();
+                return RedirectToAction("ShowAdmins", "Admin");
+            }
+            else
+            {
+                ViewBag.notification = "Wrong Infromation";
+            }
+            return View();
+        }
     }
 }

@@ -11,14 +11,15 @@ namespace AskMe.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class QuestionCategory
+    
+    public partial class Vote
     {
-        public int QuestionCategoryId { get; set; }
-        public Nullable<int> QuestionId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
-
-        public virtual Category Category { get; set; }
-        public virtual Question Question { get; set; }
+        public int VoteId { get; set; }
+        public Nullable<int> U_Id { get; set; }
+        public Nullable<int> Upvote { get; set; }
+        public Nullable<int> Downvote { get; set; }
+        public Nullable<int> VoteStatus { get; set; }
+        public Nullable<int> Q_Id { get; set; }
+        public Nullable<int> A_Id { get; set; }
     }
 }

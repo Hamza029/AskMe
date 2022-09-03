@@ -1,9 +1,58 @@
-﻿
+﻿@model List<AskMe.Models.Question>
+@using AskMe.Models;
 @{
-	ViewBag.Title = "MyQuestions";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "MyQuestions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>My Questions</h2>
+<h2>MyQuestions</h2>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Votes</th>
+            <th scope="col">Category</th>>
+            <th scope="col">Actions</th>>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.Title</td>
+                <td>@item.CreationDate</td>
 
 
+                @if (@item.Solved == 0)
+                {
+                    <td>Unsolved</td>
+                }
+                else
+                {
+                    <td>Solved</td>
+                }
+
+
+                <td>@item.VoteCount</td>
+                @{
+                    AskMeEntities dbobj = new AskMeEntities();
+                    var res = dbobj.Categories.Where(x => x.CategoryId == @item.CategoryId).First();
+                    <td>@res.CategoryName</td>
+
+                }
+            <td>
+                <a href="@Url.Action("EditQuestion",new {item.QuestionId,item.UserId,item.Title,item.Content,item.CreationDate,item.QStatus,item.Solved,item.VoteCount,item.CategoryId})"><i class="btn btn-success">Edit</i></a>
+                <a href="@Url.Action("Delete", new {item.QuestionId})"><i class="btn btn-default">Delete</i></a>
+            </td>
+              
+            </tr>
+        }
+
+
+
+    </tbody>
+</table>

@@ -61,6 +61,18 @@
     <Property Name="UserPassword" Type="varchar" MaxLength="200" />
     <Property Name="Intro" Type="text" />
   </EntityType>
+  <EntityType Name="Votes">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="U_Id" Type="int" />
+    <Property Name="Upvote" Type="int" />
+    <Property Name="Downvote" Type="int" />
+    <Property Name="VoteStatus" Type="int" />
+    <Property Name="Q_Id" Type="int" />
+    <Property Name="A_Id" Type="int" />
+  </EntityType>
   <Association Name="FK_Answer_Question">
     <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
     <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
@@ -140,6 +152,7 @@
     <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QuestionCategory" EntityType="Self.QuestionCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
       <End Role="Question" EntitySet="Question" />
       <End Role="Answer" EntitySet="Answer" />

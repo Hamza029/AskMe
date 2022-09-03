@@ -11,7 +11,7 @@ namespace AskMe.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Question
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +20,7 @@ namespace AskMe.Models
             this.Answers = new HashSet<Answer>();
             this.QuestionCategories = new HashSet<QuestionCategory>();
         }
-    
+
         public int QuestionId { get; set; }
         public Nullable<int> UserId { get; set; }
         public string Title { get; set; }
@@ -30,7 +30,7 @@ namespace AskMe.Models
         public Nullable<int> Solved { get; set; }
         public Nullable<int> VoteCount { get; set; }
         public Nullable<int> CategoryId { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }
         public virtual User User { get; set; }
