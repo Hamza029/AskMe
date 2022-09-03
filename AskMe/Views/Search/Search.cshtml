@@ -1,0 +1,26 @@
+﻿@model AskMe.Models.Question
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search</h2>
+
+@using (Html.BeginForm("SearchList", "Search", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.CategoryId)
+    @Html.HiddenFor(x => x.UserId)
+    @Html.HiddenFor(x => x.QuestionId)
+    @Html.HiddenFor(x => x.Solved)
+    @Html.HiddenFor(x => x.VoteCount)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Content, new { @class = "form-control" })
+    </div>
+
+    <button type="Submit">Search</button>
+    <div class="col-md-offset-2 col-md-10">
+        <label>@ViewBag.notification</label>
+    </div>
+}

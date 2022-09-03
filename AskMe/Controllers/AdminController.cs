@@ -15,6 +15,10 @@ namespace AskMe.Controllers
         // GET: Admin
         public ActionResult ShowAdmins()
         {
+            if (Session["Usernamess"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
             string sql = "Select * from Admin";
             List<Admin> list = db.Admins.SqlQuery(sql).ToList();
 
@@ -24,7 +28,11 @@ namespace AskMe.Controllers
         [HttpGet]
         public ActionResult AddAdmin(Admin obj)
         {
-            if(obj == null)
+            if (Session["Usernamess"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            if (obj == null)
             {
                 return View(obj);
             }
@@ -34,7 +42,11 @@ namespace AskMe.Controllers
         [HttpPost]
         public ActionResult AddAdminPost(Admin model)
         {
-            if(db.Admins.Any(x => x.UserName == model.UserName) && model.AdminId == 0)
+            if (Session["Usernamess"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            if (db.Admins.Any(x => x.UserName == model.UserName) && model.AdminId == 0)
             {
                 ViewBag.DuplicateMessage = "Username already exists";
                 return View("AddAdmin");
@@ -66,6 +78,14 @@ namespace AskMe.Controllers
 
         public ActionResult DeleteAdmin(int AdminId)
         {
+            if (Session["Usernamess"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            if (true)
+            {
+                ViewBag.notification = "You can not remove Yourself";
+            }
             var res = db.Admins.Where(x => x.AdminId == AdminId).ToList().First();
             db.Admins.Remove(res);
             db.SaveChanges();
@@ -76,6 +96,7 @@ namespace AskMe.Controllers
         }
         public ActionResult Logout()
         {
+
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
