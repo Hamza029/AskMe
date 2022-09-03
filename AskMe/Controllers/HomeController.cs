@@ -62,7 +62,7 @@ namespace AskMe.Controllers
             int uid = Convert.ToInt32(Session["userId"]);
             //int id = uid;
 
-            if (qid > 0)
+            if (qid > 0 && aid == 0)
             {
                 var count = db.Votes.Where(x => x.U_Id == uid
                                             && x.Q_Id == qid).Count();
@@ -72,7 +72,7 @@ namespace AskMe.Controllers
                     //Session["voteTwice"] = 1;
                     //return RedirectToAction("ShowQuestion", qs);
 
-                    Vote vote = db.Votes.Where(x => x.U_Id == uid && x.A_Id == aid).ToList().First();
+                    Vote vote = db.Votes.Where(x => x.U_Id == uid && x.Q_Id == qid).ToList().First();
 
                     if (vote.Upvote == 1)
                     {
@@ -283,6 +283,39 @@ namespace AskMe.Controllers
             db.SaveChanges();
             var list = db.Categories.ToList();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AnswerQuestion(Answer qs)
+        {
+
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("UserLogin", "User");
+            }
+
+            if (qs.Content == null)
+            {
+                ViewBag.notification = "Please Answer Correctly";
+                Question qq1 = db.Questions.Where(x => x.QuestionId == qs.QuestionId).ToList().First();
+                return RedirectToAction("ShowQuestion", qq1);
+            }
+            Answer obj = new Answer();
+
+
+            obj.QuestionId = qs.QuestionId;
+            obj.UserId = qs.UserId;
+            obj.Content = qs.Content;
+            obj.voteCount = 0;
+            obj.CreationDate = Convert.ToString(DateTime.Now);
+
+            Question qq = db.Questions.Where(x => x.QuestionId == qs.QuestionId).ToList().First();
+
+            db.Answers.Add(obj);
+            db.SaveChanges();
+            ViewBag.notification = "Added";
+
+            return RedirectToAction("ShowQuestion", qq);
+
         }
     }
 }
