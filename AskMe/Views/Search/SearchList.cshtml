@@ -1,7 +1,16 @@
-﻿
+﻿@model AskMe.Models.Question
+@using AskMe.Models;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+
 @{
 	ViewBag.Title = "SearchList";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	AskMeEntities db = new AskMeEntities();
 }
 
 <h2>SearchList</h2>
@@ -12,7 +21,6 @@
 	<div class="row">
 		<div class="col-md-3">
 			<p style="text-align:right">
-				@qs.VoteCount votes <br />
 				@qs.Answers.Count answers <br />
 				asked: @qs.CreationDate <br />
 				user: @qs.User.UserName <br />
