@@ -24,7 +24,7 @@ namespace AskMe.Controllers
             var contents = from x in dbobj.Questions select x;
             if (!String.IsNullOrEmpty(obj.Content))
             {
-                contents = contents.Where(x => x.Content.Contains(obj.Content));
+                contents = contents.Where(x => (x.Content.Contains(obj.Content) || x.Title.Contains(obj.Content)) && x.QStatus == 1);
             }
 
             ViewBag.qList = contents;
