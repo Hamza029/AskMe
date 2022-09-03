@@ -21,11 +21,11 @@ namespace AskMe.Models
             this.QuestionCategories = new HashSet<QuestionCategory>();
             this.Questions = new HashSet<Question>();
         }
-    
+
         public int CategoryId { get; set; }
         [Required(ErrorMessage = "Required Name")]
         public string CategoryName { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuestionCategory> QuestionCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

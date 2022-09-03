@@ -39,14 +39,79 @@ namespace AskMe.Controllers
 
         public ActionResult ShowQuestion(Question qs)
         {
-            User qUser = db.Users.Where(x => x.UserId == qs.UserId).ToList().First();
-            List<Answer> ans = db.Answers.Where(x => x.QuestionId == qs.QuestionId).ToList();
+            //User qUser = db.Users.Where(x => x.UserId == qs.UserId).ToList().First();
+            //List<Answer> ans = db.Answers.Where(x => x.QuestionId == qs.QuestionId).ToList();
 
-            ViewBag.qs = qs;
-            ViewBag.qUser = qUser;
-            ViewBag.ans = ans;
+            //ViewBag.qs = qs;
+            //ViewBag.qUser = qUser;
+            //ViewBag.ans = ans;
+            ViewBag.qid = qs.QuestionId;
 
             return View();
+        }
+
+        public ActionResult GenerateVote(int qid, int? aid, int val)
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("UserLogin", "User");
+            }
+
+            Question qs = db.Questions.Where(x => x.QuestionId == qid).ToList().First();
+
+            int uid = Convert.ToInt32(Session["userId"]);
+            //int id = uid;
+
+            if (qid > 0)
+            {
+                var count = db.Votes.Where(x => x.U_Id == uid
+                                            && x.Q_Id == qid).Count();
+
+                if (count > 0)
+                {
+                    Session["voteTwice"] = 1;
+                    return RedirectToAction("ShowQuestion", qs);
+                }
+
+                if(val == 1)
+                {
+                    Vote vote = new Vote();
+                    vote.Upvote = vote.Downvote = val;
+                    vote.Q_Id = qid;
+                    vote.U_Id = uid;
+
+                    db.Votes.Add(vote);
+                    db.SaveChanges();
+
+                    return RedirectToAction("ShowQuestion", qs);
+                }
+            }
+            else if(aid > 0)
+            {
+                var count = db.Votes.Where(x => x.U_Id == uid
+                                            && x.A_Id == aid).Count();
+
+                if (count > 0)
+                {
+                    Session["voteTwice"] = 1;
+                    return RedirectToAction("ShowQuestion", qs);
+                }
+
+                if (val == 1)
+                {
+                    Vote vote = new Vote();
+                    vote.Upvote = vote.Downvote = val;
+                    vote.A_Id = aid;
+                    vote.U_Id = uid;
+
+                    db.Votes.Add(vote);
+                    db.SaveChanges();
+
+                    return RedirectToAction("ShowQuestion", qs);
+                }
+            }
+
+            return RedirectToAction("ShowQuestion", qs);
         }
 
         public ActionResult About()

@@ -64,13 +64,21 @@ namespace AskMe.Controllers
 
             if(count > 0)
             {
-                string sql = @"select * from Users where Email = '" + log.Email.ToString() + "'";
+                //string sql = @"select * from Users where Email = '" + log.Email + "'";
 
-                var list = db.Users.SqlQuery(sql).ToList();
+                //var list = db.Users.SqlQuery(sql).ToList();
 
-                Session["username"] = list[0].UserName;
-                Session["userId"] = list[0].UserId;
+                User user = db.Users.Where(x => x.Email == log.Email
+                                            && x.UserPassword == log.UserPassword).ToList().First();
+
+                Session["username"] = user.UserName.ToString();
+                Session["userId"] = user.UserId.ToString();
                 Session["successfulLogIn"] = 1;
+                //CurrentUser.Id = user.UserId;
+                //string username = Session["username"].ToString();
+                //string us2 = username;
+                //int id = Convert.ToInt32(Session["userId"]);
+                //int id2 = id;
 
                 return RedirectToAction("Index", "Home");
             }

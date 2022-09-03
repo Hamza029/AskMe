@@ -66,6 +66,18 @@
           <Property Name="UserPassword" Type="varchar" MaxLength="200" />
           <Property Name="Intro" Type="text" />
         </EntityType>
+        <EntityType Name="Votes">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="U_Id" Type="int" />
+          <Property Name="Upvote" Type="int" />
+          <Property Name="Downvote" Type="int" />
+          <Property Name="VoteStatus" Type="int" />
+          <Property Name="Q_Id" Type="int" />
+          <Property Name="A_Id" Type="int" />
+        </EntityType>
         <Association Name="FK_Answer_Question">
           <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
           <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
@@ -145,6 +157,7 @@
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionCategory" EntityType="Self.QuestionCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
             <End Role="Question" EntitySet="Question" />
             <End Role="Answer" EntitySet="Answer" />
@@ -304,6 +317,7 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
+          <EntitySet Name="Votes" EntityType="AskMeModel.Vote" />
         </EntityContainer>
         <EntityType Name="QuestionCategory">
           <Key>
@@ -351,6 +365,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="U_Id" Type="Int32" />
+          <Property Name="Upvote" Type="Int32" />
+          <Property Name="Downvote" Type="Int32" />
+          <Property Name="VoteStatus" Type="Int32" />
+          <Property Name="Q_Id" Type="Int32" />
+          <Property Name="A_Id" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -421,6 +447,19 @@
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="QuestionCategoryId" ColumnName="QuestionCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="AskMeModel.Vote">
+              <MappingFragment StoreEntitySet="Votes">
+                <ScalarProperty Name="A_Id" ColumnName="A_Id" />
+                <ScalarProperty Name="Q_Id" ColumnName="Q_Id" />
+                <ScalarProperty Name="VoteStatus" ColumnName="VoteStatus" />
+                <ScalarProperty Name="Downvote" ColumnName="Downvote" />
+                <ScalarProperty Name="Upvote" ColumnName="Upvote" />
+                <ScalarProperty Name="U_Id" ColumnName="U_Id" />
+                <ScalarProperty Name="VoteId" ColumnName="VoteId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

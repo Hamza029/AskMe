@@ -17,6 +17,7 @@
         <AssociationConnector Association="AskMeModel.FK_QCategory_Category" />
         <AssociationConnector Association="AskMeModel.FK_QCategory_Question" />
         <AssociationConnector Association="AskMeModel.FK_Question_Category" />
+        <EntityTypeShape EntityType="AskMeModel.Vote" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

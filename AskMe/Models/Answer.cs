@@ -11,7 +11,7 @@ namespace AskMe.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Answer
     {
         public int AnswerId { get; set; }
@@ -21,7 +21,7 @@ namespace AskMe.Models
         public string Content { get; set; }
         public Nullable<int> AStatus { get; set; }
         public Nullable<int> voteCount { get; set; }
-    
+
         public virtual Question Question { get; set; }
         public virtual User User { get; set; }
     }

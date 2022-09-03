@@ -1,36 +1,79 @@
 ﻿@model AskMe.Models.Question
+@using AskMe.Models;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
 
 @{
 	ViewBag.Title = "ShowQuestion";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	AskMeEntities db = new AskMeEntities();
+
+	int qid = ViewBag.qid;
+
+	Question qq = db.Questions.Where(x => (x.QuestionId == qid)).ToList().First();
+	User qUser = db.Users.Where(x => x.UserId == qq.UserId).ToList().First();
+	List<Answer> ans = db.Answers.Where(x => x.QuestionId == qq.QuestionId).ToList();
+	int uid = 0;
+	if(Session["userId"] != null)
+	{
+		uid = Convert.ToInt32(Session["userId"]);
+	}
+}
+
+@{ 
+	if(Session["voteTwice"] != null)
+	{
+		<div class="alert alert-danger alert-dismissable" role="alert">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			You cannot vote twice!
+		</div>
+		Session.Remove("voteTwice");
+	}
 }
 
 <div class="row" style="margin-top:15px">
 	<div class="col-md-10">
 		<p style="font-size:30px">
-			@ViewBag.qs.Title
+			@qq.Title
 		</p>
 	</div>
 </div>
 <div class="row" style="margin-top:0px">
 	<div class="col-md-3">
-		asked: @ViewBag.qs.CreationDate
+		asked: @qq.CreationDate
 	</div>
 	<div class="col-md-2">
-		@ViewBag.ans.Count answers
+		@ans.Count answers
 	</div>
 	<div class="col-md-3">
-		@ViewBag.qUser.UserName
+		@qUser.UserName
 	</div>
 </div>
 <hr />
 <div class="row">
 	<div class="col-md-1">
 		<p style="font-size:25px; text-align:center">
-			<span class="glyphicon glyphicon-triangle-top"></span> <br />
-			<span style="padding-left:2px">@ViewBag.qs.VoteCount</span> <br />
+			@*<span class="glyphicon glyphicon-triangle-top"></span> <br />*@
+			<a href="@Url.Action("GenerateVote", new { qid = qq.QuestionId, val = 1})">
+				@{
+					if (db.Votes.Any(x => x.U_Id == uid && x.Q_Id == qq.QuestionId))
+					{
+						<span style="color:green;" class="glyphicon glyphicon-triangle-top"></span> <br />
+					}
+					else
+					{
+						<span style="color:gray;" class="glyphicon glyphicon-triangle-top"></span> <br />
+					}
+				}
+				@*<span class="glyphicon glyphicon-triangle-top"></span> <br />*@
+			</a>
+			<span style="padding-left:2px">@qq.VoteCount</span> <br />
 			<span class="glyphicon glyphicon-triangle-bottom"></span> <br />
-			@if(ViewBag.qs.Solved == 1)
+			@if (qq.Solved == 1)
 			{
 				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 			}
@@ -38,7 +81,7 @@
 	</div>
 	<div class="col-md-11">
 		<p style="font-size:18px">
-			@ViewBag.qs.Content
+			@qq.Content
 		</p>
 	</div>
 </div>
@@ -49,7 +92,7 @@
 	Answers:
 </p>
 
-@foreach(var a in ViewBag.ans)
+@foreach (var a in ans)
 {
 	<div style="margin-left:30px">
 		<div class="row">
